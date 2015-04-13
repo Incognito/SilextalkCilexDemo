@@ -2,11 +2,11 @@
 
 namespace Incognito\SilextalkCilexDemo\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Cilex\Command\Command;
 
 class ComposeCommand extends Command
 {
@@ -22,25 +22,25 @@ class ComposeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      // TODO: Everything.
-        /* Duplicate of code that we had in Silex, just for reference sake."
-          $emailMessage = $app['email_factory']::createFromRequest($request);
+        $emailMessageFactory = $this->getService('email_factory');
+        $emailMessage = $emailMessageFactory::createEmail(
+            $input->getArgument('toAddress'),
+            $input->getArgument('subject'),
+            $input->getArgument('body')
+        );
 
-          $validationErrors = $app['validator']->validate($emailMessage);
+        $validationErrors = $this->getService('validator')->validate($emailMessage);
 
-          if ($validationErrors->count() > 0) {
-              return new Response("Nope. That's not valid.", 400);
-          }
+        if ($validationErrors->count() > 0) {
+            $output->writeln("Nope. That's not valid.");
 
-          $app['mailer.mailer']->send($emailMessage);
+            return 1; // Exit faulure
+        }
 
-          return $app->redirect($app['url_generator']->generate('mailer_compose'));
-        */
+        $this->getService('mailer.mailer')->send($emailMessage);
 
-      // TODO load email factory
-      // TODO validate command input
-      // TODO Send email
-      // TODO Show success/failure
-       $output->writeln("Nothing here yet");
+        $output->writeln("Mail sent!");
+
+        return 0; // Exit success
     }
 }

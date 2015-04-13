@@ -2,9 +2,12 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use Incognito\SilextalkCilexDemo\Command\ComposeCommand;
+use Incognito\SilextalkCilexDemo\SilextalkCilexDemoServiceRegistry;
 
 $app = new \Cilex\Application('CilexMailer');
-$app->command(new ComposeCommand());
+
+SilextalkCilexDemoServiceRegistry::boot($app);
+
+$app->command($app['mailer.command']);
 
 $app->run();

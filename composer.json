@@ -12,7 +12,19 @@
     "autoload": {
         "psr-4": { "Incognito\\SilextalkCilexDemo\\": "src/Incognito/SilextalkCilexDemo" }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Incognito/SilextalkBase"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Incognito/silex-fork"
+        }
+    ],
     "require": {
-        "cilex/cilex": "dev-master"
+        "cilex/cilex": "dev-master",
+        "incognito/silextalk-base": "~0.1",
+        "silex/silex": "dev-providerShim as 1.2.0"
     }
 }
